@@ -23,8 +23,8 @@ public class FindByTypeTest {
 
     private static final String TEST_APP = "http://localhost:8080/testApp.html";
 
-    private static final String MY_LABEL_CLASS = "flashselenium::MyLabel";
-    private static final String MY_CIRCLE_CLASS = "flashselenium::MyCircle";
+    private static final String MY_LABEL_CLASS = "flashselenium.testapps::MyLabel";
+    private static final String MY_CIRCLE_CLASS = "flashselenium.testapps::MyCircle";
 
     private static final String TEXT_PROPERTY = "text";
 

@@ -20,7 +20,7 @@ public class RecursiveFindTest {
 
     private static final String TEST_APP = "http://localhost:8080/testApp.html";
 
-    private static final String MY_SQUARE_CLASS = "flashselenium::MySquare";
+    private static final String MY_SQUARE_CLASS = "flashselenium.testapps::MySquare";
     public static final String MOVIE_CLIP_CLASS = "flash.display.MovieClip";
     public static final String SPRITE_CLASS = "flash.display.Sprite";
 

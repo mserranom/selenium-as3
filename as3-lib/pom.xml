@@ -14,10 +14,11 @@
 	<packaging>swc</packaging>
 
 	<properties>
-        <flex.sdk.version>4.5.1.21328</flex.sdk.version>
+        <flex.sdk.version>4.6.b.23201</flex.sdk.version>
         <flexunit.version>4.1.0</flexunit.version>
-        <flexmojos.version>4.1-beta</flexmojos.version>
-        <roboteyes.version>0.1</roboteyes.version>
+        <hamcrest.version>1.1</hamcrest.version>
+        <asmock.version>1.0</asmock.version>
+        <flexmojos.version>5.1-beta-QP</flexmojos.version>
     </properties>
 			
 	<build>
@@ -25,11 +26,13 @@
 
 		<plugins>			
 			<plugin>
-				<groupId>org.sonatype.flexmojos</groupId>
-				<artifactId>flexmojos-maven-plugin</artifactId>
+                <groupId>net.flexmojos.oss</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
 				<version>${flexmojos.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+                    <iKnowWhatImDoingPleaseBreakMyBuildIwontBlameFlexmojosForStopWorking>true</iKnowWhatImDoingPleaseBreakMyBuildIwontBlameFlexmojosForStopWorking>
+                    <swfVersion>17</swfVersion>
                     <storepass>ThisShouldNotBeRequired</storepass>
 					<testTimeout>200000</testTimeout>
 					<compilerWarnings>
@@ -60,6 +63,28 @@
             <version>${flexunit.version}</version>
             <type>swc</type>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>asmock</groupId>
+            <artifactId>asmock</artifactId>
+            <version>${asmock.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>asmock</groupId>
+            <artifactId>asmock-flexunit4.1</artifactId>
+            <version>${asmock.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-as3</artifactId>
+            <version>${hamcrest.version}</version>
+            <type>swc</type>
         </dependency>
 
 	</dependencies>
