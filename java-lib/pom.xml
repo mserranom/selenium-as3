@@ -44,6 +44,15 @@
                                     <outputDirectory>src/test/resources</outputDirectory>
                                     <destFileName>app.swf</destFileName>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>flashdriver-instrumented-app</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>swf</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>src/test/resources</outputDirectory>
+                                    <destFileName>app2.swf</destFileName>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -116,6 +125,12 @@
             <type>swf</type>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>flashdriver-instrumented-app</artifactId>
+            <version>${project.version}</version>
+            <type>swf</type>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
@@ -136,6 +151,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
             <version>2.37.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 </project>

@@ -13,6 +13,7 @@
         <module>as3-lib</module>
         <module>java-lib</module>
         <module>as3-test-app</module>
+        <module>flashdriver-instrumented-app</module>
     </modules>
 
 

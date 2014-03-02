@@ -591,7 +591,7 @@ var swfobject = function() {
 		return hasBadChars && typeof encodeURIComponent != UNDEF ? encodeURIComponent(s) : s;
 	}
 	
-	/* Release memory to avoid memory leaks caused by closures, fix hanging audio/video threads and force open sockets/NetConnections to disconnect (Internet Explorer only)
+	/* Release memory to avoid memory leaks caused by closures, fix hanging audio/video threads and force open sockets/NetConnections to close (Internet Explorer only)
 	*/
 	var cleanup = function() {
 		if (ua.ie && ua.win) {
@@ -601,7 +601,7 @@ var swfobject = function() {
 				for (var i = 0; i < ll; i++) {
 					listenersArr[i][0].detachEvent(listenersArr[i][1], listenersArr[i][2]);
 				}
-				// cleanup dynamically embedded objects to fix audio/video threads and force open sockets and NetConnections to disconnect
+				// cleanup dynamically embedded objects to fix audio/video threads and force open sockets and NetConnections to close
 				var il = objIdArr.length;
 				for (var j = 0; j < il; j++) {
 					removeSWF(objIdArr[j]);

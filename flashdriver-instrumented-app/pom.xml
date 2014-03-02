@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>flashtestsuite</groupId>
-    <artifactId>as3-test-app</artifactId>
+    <artifactId>flashdriver-instrumented-app</artifactId>
     <version>1.0-SNAPSHOT</version>
 	<packaging>swf</packaging>
 
@@ -17,6 +17,7 @@
         <flex.sdk.version>4.5.1.21328</flex.sdk.version>
         <flexunit.version>4.1.0</flexunit.version>
         <flexmojos.version>4.1-beta</flexmojos.version>
+        <flash-console.version>2.7.pb</flash-console.version>
     </properties>
 			
 	<build>
@@ -30,6 +31,8 @@
 				<extensions>true</extensions>
 				<configuration>
                     <swfVersion>13</swfVersion>
+                    <debug>true</debug>
+                    <verboseStacktraces>true</verboseStacktraces>
                     <sourceFile>flashselenium/testapps/TestApp.as</sourceFile>
                     <storepass>ThisShouldNotBeRequired</storepass>
 					<testTimeout>200000</testTimeout>
@@ -52,6 +55,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>as3-lib</artifactId>
             <version>${project.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.junkbyte</groupId>
+            <artifactId>flash-console</artifactId>
+            <version>${flash-console.version}</version>
             <type>swc</type>
         </dependency>
 
