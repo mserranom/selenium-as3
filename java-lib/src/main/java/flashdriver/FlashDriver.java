@@ -3,59 +3,69 @@ package flashdriver;
 
 import flashdriver.core.By;
 import flashdriver.core.FlashElement;
-import flashdriver.core.FlashDriverException;
+import flashdriver.exceptions.ElementNotFoundException;
 import flashdriver.processor.Processor;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public class FlashDriver {
 
-    public static long DEFAULT_POLL_INTERVAL = 500;
-
-    public static long DEFAULT_TIMEOUT = 5000;
+    public static final int DEFAULT_CONNECT_TIMEOUT = 30000;
+    public static final long DEFAULT_POLL_INTERVAL = 500;
+    public static final long DEFAULT_TIMEOUT = 5000;
+    public static final int DEFAULT_PORT = 54081;
 
     private Processor processor;
 
-    public void connect() throws IOException {
+    private int connectionTimeout = DEFAULT_CONNECT_TIMEOUT;
+
+    public void connect() {
+        this.connect(DEFAULT_PORT);
+    }
+
+    public void connect(int port) {
         processor = new Processor();
-        processor.connect(54080);
+        processor.setConnectionTimeout(connectionTimeout);
+        processor.connect(port);
     }
 
-    public void close() throws IOException {
-        processor.disconnect();
+    public void close() {
+        if(processor != null) {
+            processor.disconnect();
+        }
     }
 
-    public FlashElement findElement(By by) throws IOException, ParseException {
+    public void setConnectionTimeout(int value) {
+        this.connectionTimeout = value;
+    }
+
+    public FlashElement findElement(By by) {
         FlashElement element = new FlashElement(by.getSelector(), processor);
         element.exists();
         return element;
     }
 
-    public FlashElement waitForElement(By by) throws IOException, ParseException {
+    public FlashElement waitForElement(By by) {
         return waitForElement(by, DEFAULT_TIMEOUT, DEFAULT_POLL_INTERVAL);
     }
 
-    public FlashElement waitForElement(By by, float timeout) throws IOException, ParseException {
+    public FlashElement waitForElement(By by, float timeout) {
         return waitForElement(by, timeout, DEFAULT_POLL_INTERVAL);
     }
 
-    public FlashElement waitForElement(By by, float timeout, float pollInterval) throws IOException, ParseException {
+    public FlashElement waitForElement(By by, float timeout, float pollInterval) {
 
         int maxAttempts = (int) (timeout / pollInterval);
         int currentAttempt = 1;
 
         while(true) {
             if(currentAttempt > maxAttempts) {
-                throw new FlashDriverException("unable to find element " + by.toString());
+                throw new ElementNotFoundException(by.getSelector().getValue());
             }
 
             try {
                 FlashElement element = new FlashElement(by.getSelector(), processor);
                 element.exists();
                 return element;
-            } catch (FlashDriverException e) { }
-
+            } catch (ElementNotFoundException e) { }
 
             try {
                 Thread.sleep((long) pollInterval);

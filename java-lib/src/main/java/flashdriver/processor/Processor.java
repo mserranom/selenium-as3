@@ -4,25 +4,29 @@ import flashdriver.messages.WireCommand;
 import flashdriver.messages.WireResult;
 import flashdriver.messages.WireResultParser;
 import flashdriver.socket.FlashDriverConnection;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public class Processor {
 
-    FlashDriverConnection connection;
+    private FlashDriverConnection connection;
 
-    public WireResult process(WireCommand command) throws ParseException, IOException {
+    private int connectionTimeout;
+
+    public WireResult process(WireCommand command) {
         String response = connection.sendRequest(command.toJsonString());
         return WireResultParser.parse(response);
     }
 
-    public void connect(int port) throws IOException {
+    public void connect(int port) {
         connection = new FlashDriverConnection();
+        connection.setConnectionTimeout(connectionTimeout);
         connection.connect(port);
     }
 
-    public void disconnect() throws IOException {
+    public void disconnect() {
         connection.close();
+    }
+
+    public void setConnectionTimeout(int value) {
+        this.connectionTimeout = value;
     }
 }

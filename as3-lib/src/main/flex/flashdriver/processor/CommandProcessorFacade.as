@@ -1,5 +1,7 @@
 package flashdriver.processor
 {
+import flashdriver.error.ErrorCodes;
+import flashdriver.error.FlashDriverError;
 import flashdriver.log.Logger;
 import flashdriver.messages.WireCommand;
 import flashdriver.messages.WireCommandParser;
@@ -33,27 +35,25 @@ public class CommandProcessorFacade implements ICommandProcessorFacade
             const wireCmd : WireCommand = _parser.parse(command);
             const result : String = _processor.process(wireCmd);
         }
+        catch(error:FlashDriverError)
+        {
+            LOG.error("Error parsing processing wire command:" + command + "\n" + error.toString());
+            var wireResult : WireResult = new WireResult(WireResult.ERROR, error.type, error.params);
+            return wireResult.toJsonString()
+        }
         catch (error:Error)
         {
             LOG.error("Error parsing processing wire command:" + command + "\n" + error.toString());
-            return createErrorMessage(error);
+            wireResult = new WireResult(WireResult.ERROR, ErrorCodes.INTERNAL, [error.message]);
+            return wireResult.toJsonString()
         }
 
         return createResultMessage(result);
     }
 
-    private function createErrorMessage(error:Error):String
-    {
-        const wireResult : WireResult = new WireResult(WireResult.ERROR, error.message, []);
-
-        const message : Array = [ERROR, error.message];
-        return wireResult.toJsonString()
-    }
-
     private function createResultMessage(result:String):String
     {
         const wireResult : WireResult = new WireResult(WireResult.SUCCESS, result, []);
-//        const message : Array = [SUCCESS, result];
         return wireResult.toJsonString();
     }
 }

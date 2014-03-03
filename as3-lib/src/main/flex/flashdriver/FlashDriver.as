@@ -14,7 +14,7 @@ import mx.logging.ILogger;
 public class FlashDriver
 {
 
-    public static const DEFAULT_PORT : uint = 54080;
+    public static const DEFAULT_PORT : uint = 54081;
 
     private static const LOG : ILogger = Logger.getLogger(FlashDriver);
 
@@ -37,7 +37,7 @@ public class FlashDriver
         ElementCache.clearCache();
     }
 
-    public static function connect(port:uint=DEFAULT_PORT) : void
+    public function connect(port:uint=DEFAULT_PORT) : void
     {
         if(connector)
         {
@@ -50,7 +50,7 @@ public class FlashDriver
         connector.connect(port);
     }
 
-    private static function onSocketConnect(event:Event):void
+    private function onSocketConnect(event:Event):void
     {
         LOG.debug("socket connection established, creating flashdriver connection");
         const processor : ICommandProcessorFacade = CommandProcessorFacadeFactory.create();
@@ -58,13 +58,13 @@ public class FlashDriver
         flashDriverConnection.start(connector.socket, processor);
     }
 
-    private static function onSocketError(event:Event):void
+    private function onSocketError(event:Event):void
     {
         LOG.error("couldn't establish socket connection");
         destroyConnection();
     }
 
-    public static function destroyConnection() : void
+    public function destroyConnection() : void
     {
         connector.removeEventListener(Event.CONNECT, onSocketConnect);
         connector.removeEventListener(Event.CLOSE, onSocketError);

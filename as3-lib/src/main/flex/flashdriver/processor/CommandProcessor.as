@@ -4,6 +4,10 @@ import flash.display.DisplayObject;
 import flash.events.MouseEvent;
 import flash.utils.getQualifiedClassName;
 
+import flashdriver.error.ErrorCodes;
+
+import flashdriver.error.FlashDriverError;
+
 import flashdriver.messages.WireCommand;
 
 public class CommandProcessor implements ICommandProcessor
@@ -60,8 +64,8 @@ public class CommandProcessor implements ICommandProcessor
         const prop : String = command.params[0];
         if(!element.hasOwnProperty(prop))
         {
-            throw new Error("Property " + prop + " doesn't exist for elements of type "
-                    + getQualifiedClassName(element))
+            throw new FlashDriverError(ErrorCodes.PROPERTY_NOT_FOUND,
+                    [prop, getQualifiedClassName(element)]);
         }
         return String(element[prop]);
     }
@@ -73,8 +77,8 @@ public class CommandProcessor implements ICommandProcessor
 
         if(!element.hasOwnProperty(prop))
         {
-            throw new Error("Property " + prop + " doesn't exist for elements of type "
-                    + getQualifiedClassName(element))
+            throw new FlashDriverError(ErrorCodes.PROPERTY_NOT_FOUND,
+                    [prop, getQualifiedClassName(element)]);
         }
 
         const value : String = command.params[1];

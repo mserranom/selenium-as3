@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AS3 ExternalInterface</title>
+    <script src="swfobject.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        var flashvars = {};
+
+        var params = { allowscriptaccess: "sameDomain"};
+
+        swfobject.embedSWF("appNoConnection.swf", "mySWF", "960", "600", "10.0.0", "", flashvars, params );
+
+
+
+    </script>
+</head>
+<body>
+
+
+<div id="mySWF"></div>
+
+</body>
+</html>

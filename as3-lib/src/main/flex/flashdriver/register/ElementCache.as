@@ -1,6 +1,10 @@
 package flashdriver.register
 {
 import flash.utils.Dictionary;
+import flash.utils.getQualifiedClassName;
+
+import flashdriver.error.ErrorCodes;
+import flashdriver.error.FlashDriverError;
 
 import flashdriver.messages.Selector;
 
@@ -21,7 +25,7 @@ public class ElementCache
     {
         if(!_cacheId[id])
         {
-            throw new Error("Unable to find element with id=" + id + " in the cache");
+            throw new FlashDriverError(ErrorCodes.ELEMENT_NOT_FOUND,[id]);
         }
         delete _cacheId[id];
     }
@@ -38,13 +42,13 @@ public class ElementCache
             const result : * = _cacheId[selector.value];
             if(!result)
             {
-                throw new Error("Unable to find element with id=" + selector.value + " in the cache");
+                throw new FlashDriverError(ErrorCodes.ELEMENT_NOT_FOUND,[selector.value]);
             }
             return result;
         }
         else
         {
-            throw new Error("TODO");
+            throw new Error("Unknown selector type: " + selector.type);
         }
 
     }

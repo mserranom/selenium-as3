@@ -5,17 +5,13 @@ import com.junkbyte.console.Cc;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.system.Security;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 
 import flashdriver.FlashDriver;
 
-import flashselenium.*;
-
 import mx.logging.ILogger;
-
 import mx.logging.Log;
 import mx.logging.LogEventLevel;
 
@@ -58,7 +54,7 @@ public class TestApp extends Sprite
 
         addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
-        FlashDriver.connect(54081);
+        new FlashDriver().connect();
 
     }
 
@@ -98,7 +94,7 @@ public class TestApp extends Sprite
 
     private function onEnterFrame(...rest) : void
     {
-        label.text = SeleniumConnector.status;
+        label.text = "myText";
     }
 
     private function configureLabel():void {
