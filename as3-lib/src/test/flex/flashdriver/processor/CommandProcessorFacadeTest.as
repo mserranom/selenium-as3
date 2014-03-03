@@ -4,11 +4,13 @@ import asmock.framework.Expect;
 import asmock.framework.MockRepository;
 import asmock.integration.flexunit.IncludeMocksRule;
 
+import flashdriver.error.ErrorCodes;
 import flashdriver.messages.WireCommandParser;
 
 import org.flexunit.assertThat;
 import org.flexunit.asserts.assertEquals;
 import org.hamcrest.collection.arrayWithSize;
+import org.hamcrest.core.isA;
 
 public class CommandProcessorFacadeTest
 {
@@ -39,20 +41,22 @@ public class CommandProcessorFacadeTest
         mockForProcessorFacadeToReturn("123");
 
         const result : Object = JSON.parse(processorFacade.process("foo"));
-        assertThat(result, arrayWithSize(2));
+        assertThat(result, arrayWithSize(3));
         assertEquals("success", result[0]);
         assertEquals("123", result[1]);
+        assertThat(result[2], isA(arrayWithSize(0)));
         mockRepo.verifyAll();
     }
 
     [Test]
-    public function testFail_returnsErrorMEssage() : void
+    public function testFail_returnsErrorMessage() : void
     {
         mockForProcessorFacadeToThrow("myErrorMessage");
         const result : Object = JSON.parse(processorFacade.process("foo"));
-        assertThat(result, arrayWithSize(2));
+        assertThat(result, arrayWithSize(3));
         assertEquals("error", result[0]);
-        assertEquals("myErrorMessage", result[1]);
+        assertEquals(ErrorCodes.INTERNAL, result[1]);
+        assertEquals("myErrorMessage", result[2][0]);
         mockRepo.verifyAll();
     }
 
