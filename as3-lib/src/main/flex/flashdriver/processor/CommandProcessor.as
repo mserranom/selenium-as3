@@ -102,8 +102,8 @@ public class CommandProcessor implements ICommandProcessor
         }
         catch (error:Error)
         {
-            throw new Error("Unable to set value " + value + " to property " + prop
-                    + " in object of type " + getQualifiedClassName(element))
+            throw new FlashDriverError(ErrorCodes.UNABLE_TO_SET_PROPERTY,
+                    [prop, value, getQualifiedClassName(element), error.message]);
         }
 
         return "";

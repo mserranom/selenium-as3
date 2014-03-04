@@ -2,6 +2,8 @@ package flashdriver.exceptions;
 
 import flashdriver.messages.WireResult;
 
+import java.util.List;
+
 public class ExceptionFactory {
 
     private static String ELEMENT_NOT_FOUND = "#10";
@@ -9,6 +11,8 @@ public class ExceptionFactory {
     private static String PROPERTY_NOT_FOUND = "#11";
 
     private static String FUNCTION_NOT_FOUND = "#12";
+
+    private static String UNABLE_TO_SET_PROPERTY = "#13";
 
     private static String FUNCTION_INVOCATION_ERROR = "#21";
 
@@ -19,6 +23,8 @@ public class ExceptionFactory {
             return createElementNotFound(result);
         } else if(result.getResult().equals(PROPERTY_NOT_FOUND)) {
             return createPropertyNotFound(result);
+        } else if(result.getResult().equals(UNABLE_TO_SET_PROPERTY)) {
+            return createPropertySet(result);
         } else if(result.getResult().equals(FUNCTION_NOT_FOUND)) {
             return createFunctionNotFound(result);
         } else if(result.getResult().equals(FUNCTION_INVOCATION_ERROR)) {
@@ -43,6 +49,15 @@ public class ExceptionFactory {
                     " name and a type");
         }
         return new PropertyNotFoundException(result.getParams().get(0), result.getParams().get(1));
+    }
+
+    private static RuntimeException createPropertySet(WireResult result) {
+        if(result.getParams().size() < 3) {
+            return new FlashDriverInternalException("raising property set exception requires a property" +
+                    ", value and a type");
+        }
+        List<String> params = result.getParams();
+        return new PropertySetException(params.get(0), params.get(1), params.get(2), params.get(3));
     }
 
     private static RuntimeException createFunctionNotFound(WireResult result) {

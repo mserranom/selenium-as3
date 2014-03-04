@@ -10,6 +10,8 @@ public class ErrorCodes
 
     public static const FUNCTION_NOT_FOUND : String = "#12";
 
+    public static const UNABLE_TO_SET_PROPERTY : String = "#13";
+
     public static const FUNCTION_INVOCATION_ERROR : String = "#21";
 
 }
