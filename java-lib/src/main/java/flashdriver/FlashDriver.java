@@ -3,8 +3,14 @@ package flashdriver;
 
 import flashdriver.core.By;
 import flashdriver.core.FlashElement;
+import flashdriver.core.FlashFunction;
 import flashdriver.exceptions.ElementNotFoundException;
+import flashdriver.messages.Selector;
+import flashdriver.messages.SelectorType;
 import flashdriver.processor.Processor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlashDriver {
 
@@ -75,6 +81,15 @@ public class FlashDriver {
 
             currentAttempt++;
         }
+    }
+
+    public String executeFunction(String id) {
+        return executeFunction(id, new ArrayList<String>());
+    }
+
+    public String executeFunction(String id, List<String> params) {
+        FlashFunction element = new FlashFunction(new Selector(SelectorType.ID, id), processor);
+        return element.execute(params);
     }
 
 }

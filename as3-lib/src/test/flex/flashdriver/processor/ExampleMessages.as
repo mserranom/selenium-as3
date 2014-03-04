@@ -13,6 +13,8 @@ public class ExampleMessages
 
     public static const SET_PROPERTY_BY_ID : String = "[\"setProperty\",{\"id\":\"myId\"},\"myProp\",\"myValue\"]";
 
+    public static const EXECUTE : String = "[\"execute\",{\"id\":\"myId\"},\"param\"]";
+
     public static const WRONG_COMMAND : String = "[\"xsts\",{\"id\":\"myId\"}]";
 
 

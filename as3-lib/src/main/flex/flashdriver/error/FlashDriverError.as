@@ -2,19 +2,19 @@ package flashdriver.error
 {
 public class FlashDriverError
 {
-    private var _type : String;
+    private var _code : String;
 
     private var _params : Array;
 
-    public function FlashDriverError(type:String, params:Array)
+    public function FlashDriverError(code:String, params:Array)
     {
-        _type = type;
+        _code = code;
         _params = params;
     }
 
-    public function get type():String
+    public function get code():String
     {
-        return _type;
+        return _code;
     }
 
     public function get params():Array
@@ -24,7 +24,7 @@ public class FlashDriverError
 
     public function toString() : String
     {
-        return "FlashDriverError " + _type + ": "  + JSON.stringify(_params);
+        return "FlashDriverError " + _code + ": "  + JSON.stringify(_params);
     }
 }
 }

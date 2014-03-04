@@ -50,4 +50,15 @@ public class WireCommandTest extends TestCase {
         String expectedJSon = "[\"setProperty\",{\"id\":\"myId\"},\"propName\",\"propValue\"]";
         assertEquals(expectedJSon, command.toJsonString());
     }
+
+    @Test
+    public void testExecute_producesCorrectJSON() {
+        Selector selector = new Selector(SelectorType.ID, "myId");
+        List<String> params = new ArrayList<String>();
+        params.add("param1");
+        params.add("param2");
+        command = new WireCommand(WireCommandType.EXECUTE, selector, params);
+        String expectedJSon = "[\"execute\",{\"id\":\"myId\"},\"param1\",\"param2\"]";
+        assertEquals(expectedJSon, command.toJsonString());
+    }
 }

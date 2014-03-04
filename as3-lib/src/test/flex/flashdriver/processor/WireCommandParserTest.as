@@ -56,6 +56,17 @@ public class WireCommandParserTest
         assertEquals("myValue", command.params[1]);
     }
 
+    [Test]
+    public function testExecute_isParsedCorrectly() : void
+    {
+        const command : WireCommand = parser.parse(ExampleMessages.EXECUTE);
+        assertEquals(WireCommand.EXECUTE, command.type);
+        assertEquals(Selector.ID, command.selector.type);
+        assertEquals("myId", command.selector.value);
+        assertEquals("param", command.params[0]);
+    }
+
+
     [Test(expects="Error")]
     public function testWrongCommandType_throwsError() : void
     {

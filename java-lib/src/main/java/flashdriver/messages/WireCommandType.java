@@ -5,7 +5,8 @@ public enum WireCommandType {
     EXISTS("exists"),
     CLICK("click"),
     GET_PROPERTY("getProperty"),
-    SET_PROPERTY("setProperty");
+    SET_PROPERTY("setProperty"),
+    EXECUTE("execute");
 
     private String value;
 

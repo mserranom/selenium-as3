@@ -8,5 +8,9 @@ public class ErrorCodes
 
     public static const PROPERTY_NOT_FOUND : String = "#11";
 
+    public static const FUNCTION_NOT_FOUND : String = "#12";
+
+    public static const FUNCTION_INVOCATION_ERROR : String = "#21";
+
 }
 }

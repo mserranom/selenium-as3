@@ -37,13 +37,13 @@ public class CommandProcessorFacade implements ICommandProcessorFacade
         }
         catch(error:FlashDriverError)
         {
-            LOG.error("Error parsing processing wire command:" + command + "\n" + error.toString());
-            var wireResult : WireResult = new WireResult(WireResult.ERROR, error.type, error.params);
+            LOG.error("error executing wire command:" + command + "\n" + error.toString());
+            var wireResult : WireResult = new WireResult(WireResult.ERROR, error.code, error.params);
             return wireResult.toJsonString()
         }
         catch (error:Error)
         {
-            LOG.error("Error parsing processing wire command:" + command + "\n" + error.toString());
+            LOG.error("error parsing processing wire command:" + command + "\n" + error.toString());
             wireResult = new WireResult(WireResult.ERROR, ErrorCodes.INTERNAL, [error.message]);
             return wireResult.toJsonString()
         }

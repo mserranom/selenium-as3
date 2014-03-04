@@ -12,5 +12,10 @@ public class ElementCacheProxy
     {
         return ElementCache.getElement(selector);
     }
+
+    public function getFunction(id:String) : Function
+    {
+        return ElementCache.getFunction(id);
+    }
 }
 }

@@ -56,6 +56,8 @@ public class TestApp extends Sprite
 
         new FlashDriver().connect();
 
+        FlashDriver.registerFunction("callback", buildMessage);
+
     }
 
     private static var consoleLogTarget : ConsoleLogTarget;
@@ -120,9 +122,11 @@ public class TestApp extends Sprite
 //        Security.loadPolicyFile("xmlsocket://127.0.0.1:55000");
         var logger : ILogger = Log.getLogger("app");
         logger.info("connecting");
+    }
 
-
-
+    private function buildMessage(hello:String, world:String)
+    {
+        return hello + " " + world + "!!";
     }
 }
 }

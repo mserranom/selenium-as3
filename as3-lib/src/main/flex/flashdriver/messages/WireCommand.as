@@ -12,6 +12,8 @@ public class WireCommand
 
     public static const GET_PROPERTY : String = "getProperty";
 
+    public static const EXECUTE : String = "execute";
+
     private var _type : String;
 
     private var _selector : Selector;

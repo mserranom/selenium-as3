@@ -32,6 +32,16 @@ public class FlashDriver
         ElementCache.removeElementById(id, element);
     }
 
+    public static function registerFunction(id:String, func:Function) : void
+    {
+       ElementCache.registerFunction(id, func);
+    }
+
+    public static function removeFunction(id:String, func:Function) : void
+    {
+        ElementCache.removeFunction(id, func);
+    }
+
     public static function clearCache() : void
     {
         ElementCache.clearCache();

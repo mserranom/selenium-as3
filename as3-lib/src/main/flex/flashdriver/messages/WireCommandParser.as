@@ -35,7 +35,7 @@ public class WireCommandParser
         const params : Array = message.slice(2);
 
         const result : WireCommand = new WireCommand(type, selector, params);
-        validateCommandParams(result);
+        validateWireCommand(result);
 
         return result;
     }
@@ -48,6 +48,7 @@ public class WireCommandParser
             case WireCommand.EXISTS:
             case WireCommand.GET_PROPERTY:
             case WireCommand.SET_PROPERTY:
+            case WireCommand.EXECUTE:
                 return message[0];
             default:
                 throw new Error("Unknown message type: " + message[0] + ". message=" + _currentMsg);
@@ -67,7 +68,7 @@ public class WireCommandParser
         }
     }
 
-    private function validateCommandParams(command:WireCommand) : void
+    private function validateWireCommand(command:WireCommand) : void
     {
         switch (command.type)
         {
@@ -84,6 +85,12 @@ public class WireCommandParser
                 if(command.params.length < 2)
                 {
                     throw new Error(WireCommand.SET_PROPERTY + " command requires two parameter: " + _currentMsg)
+                }
+                return;
+            case WireCommand.EXECUTE:
+                if(command.selector.type != Selector.ID)
+                {
+                    throw new Error(WireCommand.EXECUTE + " command requires selection by id: " + _currentMsg)
                 }
                 return;
             default:

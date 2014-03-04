@@ -7,11 +7,15 @@ import flash.utils.getQualifiedClassName;
 import flashdriver.error.ErrorCodes;
 
 import flashdriver.error.FlashDriverError;
+import flashdriver.log.Logger;
 
 import flashdriver.messages.WireCommand;
 
+import mx.logging.ILogger;
+
 public class CommandProcessor implements ICommandProcessor
 {
+    private static const LOG : ILogger = Logger.getLogger(CommandProcessor);
 
     private var _cache : ElementCacheProxy;
 
@@ -32,6 +36,8 @@ public class CommandProcessor implements ICommandProcessor
                 return processGetProperty(command);
             case WireCommand.SET_PROPERTY:
                 return processSetProperty(command);
+            case WireCommand.EXECUTE:
+                return processExecute(command);
             default:
                 throw new Error("Unknown command type: " + command.type)
         }
@@ -100,6 +106,24 @@ public class CommandProcessor implements ICommandProcessor
                     + " in object of type " + getQualifiedClassName(element))
         }
 
+        return "";
+    }
+
+    private function processExecute(command:WireCommand) : String
+    {
+        const func : Function = _cache.getFunction(command.selector.value);
+        LOG.info("executing function with id='" + command.selector.value + "' with params="
+                + JSON.stringify(command.params));
+        try
+        {
+            return func.apply(null, command.params);
+        }
+        catch (error:Error)
+        {
+            var msg : String = error.getStackTrace() ? error.getStackTrace() : error.message;
+            throw new FlashDriverError(ErrorCodes.FUNCTION_INVOCATION_ERROR,
+                    [command.selector.value, msg]);
+        }
         return "";
     }
 }
