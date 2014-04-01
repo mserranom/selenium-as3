@@ -19,6 +19,7 @@
         <hamcrest.version>1.1</hamcrest.version>
         <asmock.version>1.0</asmock.version>
         <flexmojos.version>5.1-beta-QP</flexmojos.version>
+        <starling.version>1.4</starling.version>
     </properties>
 			
 	<build>
@@ -84,6 +85,13 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-as3</artifactId>
             <version>${hamcrest.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gamua</groupId>
+            <artifactId>starling-framework</artifactId>
+            <version>${starling.version}</version>
             <type>swc</type>
         </dependency>
 
