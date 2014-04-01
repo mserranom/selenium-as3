@@ -19,23 +19,23 @@ public class By {
         return selector;
     }
 
-    public static By ID(String query) {
+    public static By id(String query) {
         return new By(SelectorType.ID, query);
     }
 
-    public static By LABEL(String query) {
+    public static By label(String query) {
         return new By(SelectorType.LABEL, query);
     }
 
-    public static By TYPE(String query) {
+    public static By type(String query) {
         return new By(SelectorType.TYPE, query);
     }
 
-    public static By TYPE_AND_LABEL(String type, String label) {
+    public static By typeAndLabel(String type, String label) {
         return new By(SelectorType.TYPE_AND_LABEL, type, label);
     }
 
-    public static By BUTTON_LABEL(String query) {
+    public static By buttonLabel(String query) {
         return new By(SelectorType.BUTTON_LABEL, query);
     }
 

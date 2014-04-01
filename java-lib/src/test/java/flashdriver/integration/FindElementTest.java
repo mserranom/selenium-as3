@@ -15,15 +15,15 @@ public class FindElementTest extends IntegrationTestBase {
 
     @Test
     public void findElements() throws Exception{
-        flashDriver.findElement(By.ID("label")).exists();
-        flashDriver.findElement(By.ID("rect1")).exists();
-        flashDriver.findElement(By.ID("rect2")).exists();
+        flashDriver.findElement(By.id("label")).exists();
+        flashDriver.findElement(By.id("rect1")).exists();
+        flashDriver.findElement(By.id("rect2")).exists();
         assertTrue(true);
     }
 
     @Test
     public void waitForElement() throws Exception{
-        flashDriver.waitForElement(By.ID("label")).exists();
+        flashDriver.waitForElement(By.id("label")).exists();
         assertTrue(true);
     }
 
@@ -31,7 +31,7 @@ public class FindElementTest extends IntegrationTestBase {
     public void elementNotFound_throwsException_and_defaultTimeout_isCorrect() throws IOException {
         long watch = System.currentTimeMillis();
         try {
-            flashDriver.waitForElement(By.ID("foo")).exists();
+            flashDriver.waitForElement(By.id("foo")).exists();
         } finally {
             assertThat(System.currentTimeMillis() - watch, greaterThan(FlashDriver.DEFAULT_TIMEOUT));
         }
@@ -41,7 +41,7 @@ public class FindElementTest extends IntegrationTestBase {
     public void elementNotFound_throwsException_and_timeoutSet_isCorrect() throws IOException {
         long watch = System.currentTimeMillis();
         try {
-            flashDriver.waitForElement(By.ID("foo"), 1000).exists();
+            flashDriver.waitForElement(By.id("foo"), 1000).exists();
         } finally {
             assertThat(System.currentTimeMillis() - watch, greaterThan(1000L));
         }
@@ -49,7 +49,7 @@ public class FindElementTest extends IntegrationTestBase {
 
     @Test(expected = ElementNotFoundException.class)
     public void findElements_throwsError() throws Exception{
-        flashDriver.findElement(By.ID("fooxfx")).exists();
+        flashDriver.findElement(By.id("fooxfx")).exists();
     }
 
 }

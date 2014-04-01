@@ -13,7 +13,7 @@ public class SetPropertyTest extends IntegrationTestBase {
 
     @Test
     public void textSetter() {
-        FlashElement element = flashDriver.findElement(By.ID("rect1"));
+        FlashElement element = flashDriver.findElement(By.id("rect1"));
         assertEquals(100, element.getInt("x"));
         element.setProperty("x", "312");
         assertEquals(312, element.getInt("x"));
@@ -21,7 +21,7 @@ public class SetPropertyTest extends IntegrationTestBase {
 
     @Test(expected = PropertySetException.class)
     public void setting_readOnly_throws_propertySetException() throws Exception{
-        FlashElement element = flashDriver.findElement(By.ID("rect1"));
+        FlashElement element = flashDriver.findElement(By.id("rect1"));
         try {
             element.setProperty("mouseX", "312");
         } catch (PropertySetException e) {
