@@ -21,25 +21,13 @@ public class WireCommand {
         this.params = params;
     }
 
-    public WireCommandType getType() {
-        return type;
-    }
-
-    public Selector getSelector() {
-        return selector;
-    }
-
-    public List<String> getParams() {
-        return params;
-    }
-
     public String toJsonString() {
         JSONArray list = new JSONArray();
-        list.put(this.getType().getValue());
+        list.put(type.getValue());
 
         list.put(selector.toJson());
 
-        for(String param : getParams()) {
+        for(String param : params) {
             list.put(param);
         }
 

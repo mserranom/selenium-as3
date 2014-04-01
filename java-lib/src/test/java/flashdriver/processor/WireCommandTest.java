@@ -4,23 +4,64 @@ import flashdriver.messages.Selector;
 import flashdriver.messages.SelectorType;
 import flashdriver.messages.WireCommand;
 import flashdriver.messages.WireCommandType;
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WireCommandTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public class WireCommandTest {
 
     private WireCommand command;
 
+
+
+    // exists with different By options
+
     @Test
-    public void testExists_producesCorrectJSON() {
+    public void testExists_byID_producesCorrectJSON() {
         Selector selector = new Selector(SelectorType.ID, "myId");
         command = new WireCommand(WireCommandType.EXISTS, selector);
         String expectedJSon = "[\"exists\",{\"id\":\"myId\"}]";
         assertEquals(expectedJSon, command.toJsonString());
     }
+
+    @Test
+    public void testExists_byType_producesCorrectJSON() {
+        Selector selector = new Selector(SelectorType.TYPE, "myType");
+        command = new WireCommand(WireCommandType.EXISTS, selector);
+        String expectedJSon = "[\"exists\",{\"type\":\"myType\"}]";
+        assertEquals(expectedJSon, command.toJsonString());
+    }
+
+    @Test
+    public void testExists_byLabel_producesCorrectJSON() {
+        Selector selector = new Selector(SelectorType.LABEL, "myText");
+        command = new WireCommand(WireCommandType.EXISTS, selector);
+        String expectedJSon = "[\"exists\",{\"label\":\"myText\"}]";
+        assertEquals(expectedJSon, command.toJsonString());
+    }
+
+    @Test
+    public void testExists_byButtonLabel_producesCorrectJSON() {
+        Selector selector = new Selector(SelectorType.BUTTON_LABEL, "myText");
+        command = new WireCommand(WireCommandType.EXISTS, selector);
+        String expectedJSon = "[\"exists\",{\"buttonLabel\":\"myText\"}]";
+        assertEquals(expectedJSon, command.toJsonString());
+    }
+
+    @Test
+    public void testExists_byTypeAndLabel_producesCorrectJSON() {
+        Selector selector = new Selector(SelectorType.TYPE_AND_LABEL, "myType", "myText");
+        command = new WireCommand(WireCommandType.EXISTS, selector);
+        String expectedJSon = "[\"exists\",{\"typeAndLabel\":[\"myType\",\"myText\"]}]";
+        assertEquals(expectedJSon, command.toJsonString());
+    }
+
+
+
+    // rest of commands
 
     @Test
     public void testClick_producesCorrectJSON() {

@@ -3,7 +3,7 @@ package flashdriver.messages;
 
 public enum SelectorType {
 
-    ID("id");
+    ID("id"), LABEL("label"), TYPE("type"), TYPE_AND_LABEL("typeAndLabel"), BUTTON_LABEL("buttonLabel");
 
     private String value;
 

@@ -64,7 +64,7 @@ public class FlashDriver {
 
         while(true) {
             if(currentAttempt > maxAttempts) {
-                throw new ElementNotFoundException(by.getSelector().getValue());
+                throw new ElementNotFoundException(by.getSelector().valuesString());
             }
 
             try {
