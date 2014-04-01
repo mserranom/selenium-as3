@@ -1,15 +1,12 @@
 package flashdriver.processor
 {
-import flash.display.DisplayObject;
-import flash.events.MouseEvent;
-import flash.utils.getQualifiedClassName;
-
-import flashdriver.error.ErrorCodes;
-
-import flashdriver.error.FlashDriverError;
 import flashdriver.log.Logger;
-
 import flashdriver.messages.WireCommand;
+import flashdriver.processor.commands.Click;
+import flashdriver.processor.commands.Execute;
+import flashdriver.processor.commands.Exists;
+import flashdriver.processor.commands.GetProperty;
+import flashdriver.processor.commands.SetProperty;
 
 import mx.logging.ILogger;
 
@@ -45,86 +42,27 @@ public class CommandProcessor implements ICommandProcessor
 
     private function processClick(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
-        if(!(element is DisplayObject))
-        {
-            throw new Error("couldn't perform click, object of type"
-                    + getQualifiedClassName(element) + " is not a DisplayObject")
-        }
-
-        const displayObject : DisplayObject = element as DisplayObject;
-        displayObject.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-
-        return "";
+        return new Click(_cache).process(command);
     }
 
     private function processExists(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
-        return "";
+        return new Exists(_cache).process(command);
     }
 
     private function processGetProperty(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
-        const prop : String = command.params[0];
-        if(!element.hasOwnProperty(prop))
-        {
-            throw new FlashDriverError(ErrorCodes.PROPERTY_NOT_FOUND,
-                    [prop, getQualifiedClassName(element)]);
-        }
-        return String(element[prop]);
+        return new GetProperty(_cache).process(command);
     }
 
     private function processSetProperty(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
-        const prop : String = command.params[0];
-
-        if(!element.hasOwnProperty(prop))
-        {
-            throw new FlashDriverError(ErrorCodes.PROPERTY_NOT_FOUND,
-                    [prop, getQualifiedClassName(element)]);
-        }
-
-        const value : String = command.params[1];
-        var valueToSet : * = value;
-
-        if(value == "true" || value == "false")
-        {
-            valueToSet = (value == "true") ? true : false;
-        }
-
-        try
-        {
-            element[prop] = valueToSet;
-            return "";
-        }
-        catch (error:Error)
-        {
-            throw new FlashDriverError(ErrorCodes.UNABLE_TO_SET_PROPERTY,
-                    [prop, value, getQualifiedClassName(element), error.message]);
-        }
-
-        return "";
+        return new SetProperty(_cache).process(command);
     }
 
     private function processExecute(command:WireCommand) : String
     {
-        const func : Function = _cache.getFunction(command.selector.value);
-        LOG.info("executing function with id='" + command.selector.value + "' with params="
-                + JSON.stringify(command.params));
-        try
-        {
-            return func.apply(null, command.params);
-        }
-        catch (error:Error)
-        {
-            var msg : String = error.getStackTrace() ? error.getStackTrace() : error.message;
-            throw new FlashDriverError(ErrorCodes.FUNCTION_INVOCATION_ERROR,
-                    [command.selector.value, msg]);
-        }
-        return "";
+        return new Execute(_cache).process(command);
     }
 }
 }

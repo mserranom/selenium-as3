@@ -22,12 +22,12 @@ public class FlashDriver
 
     private static var flashDriverConnection : FlashDriverConnection;
 
-    public static function registerElementByID(id:String, element:*)
+    public static function registerElementByID(id:String, element:*) : void
     {
         ElementCache.registerElementById(id, element);
     }
 
-    public static function removeElementById(id:String, element:*)
+    public static function removeElementById(id:String, element:*) : void
     {
         ElementCache.removeElementById(id, element);
     }

@@ -37,15 +37,6 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>${project.groupId}</groupId>
-                                    <artifactId>as3-test-app</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>swf</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>src/test/resources</outputDirectory>
-                                    <destFileName>app.swf</destFileName>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
                                     <artifactId>flashdriver-instrumented-app</artifactId>
                                     <version>${project.version}</version>
                                     <type>swf</type>
@@ -118,12 +109,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>as3-test-app</artifactId>
-            <version>${project.version}</version>
-            <type>swf</type>
-        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>flashdriver-instrumented-app</artifactId>
