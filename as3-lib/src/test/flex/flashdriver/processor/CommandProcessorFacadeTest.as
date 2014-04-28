@@ -16,11 +16,11 @@ public class CommandProcessorFacadeTest
 {
     [Rule]
     public var includeMocks : IncludeMocksRule = new IncludeMocksRule([
-        ICommandProcessor,WireCommandParser]);
+        IWireCommandExecutor,WireCommandParser]);
 
     private var mockRepo : MockRepository;
 
-    private var processorMock : ICommandProcessor;
+    private var processorMock : IWireCommandExecutor;
     private var parserMock : WireCommandParser;
 
     private var processorFacade : CommandProcessorFacade;
@@ -29,7 +29,7 @@ public class CommandProcessorFacadeTest
     public function setup() : void
     {
         mockRepo = new MockRepository();
-        processorMock = mockRepo.createStub(ICommandProcessor) as ICommandProcessor;
+        processorMock = mockRepo.createStub(IWireCommandExecutor) as IWireCommandExecutor;
         parserMock = mockRepo.createStub(WireCommandParser) as WireCommandParser;
         mockRepo.replayAll();
         processorFacade = new CommandProcessorFacade(processorMock, parserMock)
@@ -66,7 +66,7 @@ public class CommandProcessorFacadeTest
         Expect.call(parserMock.parse(null)).repeat.once().ignoreArguments().returnValue(null);
 
         mockRepo.backToRecord(processorMock);
-        Expect.call(processorMock.process(null)).repeat.once().ignoreArguments().returnValue(value);
+        Expect.call(processorMock.execute(null)).repeat.once().ignoreArguments().returnValue(value);
 
         mockRepo.replayAll();
     }
@@ -77,7 +77,7 @@ public class CommandProcessorFacadeTest
         Expect.call(parserMock.parse(null)).repeat.once().ignoreArguments().returnValue(null);
 
         mockRepo.backToRecord(processorMock);
-        Expect.call(processorMock.process(null)).repeat.once().ignoreArguments().throwError(new Error(message));
+        Expect.call(processorMock.execute(null)).repeat.once().ignoreArguments().throwError(new Error(message));
 
         mockRepo.replayAll();
     }

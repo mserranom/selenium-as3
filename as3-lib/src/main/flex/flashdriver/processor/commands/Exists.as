@@ -1,20 +1,14 @@
 package flashdriver.processor.commands
 {
 import flashdriver.messages.WireCommand;
-import flashdriver.processor.ElementCacheProxy;
+import flashdriver.finder.ElementFinder;
 
 public class Exists
 {
-    private var _cache : ElementCacheProxy;
-
-    public function Exists(cache:ElementCacheProxy)
-    {
-        _cache = cache;
-    }
 
     public function process(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
+        new ElementFinder().find(command.selector);
         return "";
     }
 }

@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.greaterThan;
 public class FindElementTest extends IntegrationTestBase {
 
     @Test
-    public void findElements() throws Exception{
+    public void findElements() {
         flashDriver.findElement(By.id("label")).exists();
         flashDriver.findElement(By.id("rect1")).exists();
         flashDriver.findElement(By.id("rect2")).exists();
@@ -22,7 +22,7 @@ public class FindElementTest extends IntegrationTestBase {
     }
 
     @Test
-    public void waitForElement() throws Exception{
+    public void waitForElement() {
         flashDriver.waitForElement(By.id("label")).exists();
         assertTrue(true);
     }

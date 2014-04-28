@@ -12,6 +12,8 @@ public class ErrorCodes
 
     public static const UNABLE_TO_SET_PROPERTY : String = "#13";
 
+    public static const DISPLAY_ROOT_NOT_DEFINED : String = "#14";
+
     public static const FUNCTION_INVOCATION_ERROR : String = "#21";
 
 }

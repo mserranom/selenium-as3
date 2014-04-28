@@ -1,16 +1,17 @@
 TODO
 ---------------
- - change artifact names to FlashDriver
+ - add setKeys and clear
  - add introduction wiki
  - add find by type
  - add find by label
  - add find by button label
  - add find by type and label
  - improve waits / implicit explicit waits
- - add by chains
+ - add 'by' chains
  - take screenshot
  - remote running
 
 
 DONE
 ---------------
+ [x] change artifact names to FlashDriver

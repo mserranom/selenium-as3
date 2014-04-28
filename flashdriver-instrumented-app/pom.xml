@@ -16,7 +16,7 @@
 	<properties>
         <flex.sdk.version>4.5.1.21328</flex.sdk.version>
         <flexunit.version>4.1.0</flexunit.version>
-        <flexmojos.version>4.1-beta</flexmojos.version>
+        <flexmojos.version>5.1-beta-QP</flexmojos.version>
         <flash-console.version>2.7.pb</flash-console.version>
     </properties>
 			
@@ -25,12 +25,12 @@
 
 		<plugins>			
 			<plugin>
-				<groupId>org.sonatype.flexmojos</groupId>
+                <groupId>net.flexmojos.oss</groupId>
 				<artifactId>flexmojos-maven-plugin</artifactId>
 				<version>${flexmojos.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-                    <swfVersion>13</swfVersion>
+                    <swfVersion>20</swfVersion>
                     <debug>true</debug>
                     <verboseStacktraces>true</verboseStacktraces>
                     <sourceFile>flashselenium/testapps/TestApp.as</sourceFile>
@@ -53,7 +53,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>as3-lib</artifactId>
+            <artifactId>flashdriver-client</artifactId>
             <version>${project.version}</version>
             <type>swc</type>
         </dependency>

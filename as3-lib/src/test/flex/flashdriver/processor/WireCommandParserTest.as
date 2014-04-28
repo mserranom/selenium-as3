@@ -23,7 +23,7 @@ public class WireCommandParserTest
         const command : WireCommand = parser.parse(ExampleMessages.EXISTS_BY_ID);
         assertEquals(WireCommand.EXISTS, command.type);
         assertEquals(Selector.ID, command.selector.type);
-        assertEquals("myId", command.selector.value);
+        assertEquals("myId", command.selector.value1);
     }
 
     [Test]
@@ -32,7 +32,7 @@ public class WireCommandParserTest
         const command : WireCommand = parser.parse(ExampleMessages.CLICK_BY_ID);
         assertEquals(WireCommand.CLICK, command.type);
         assertEquals(Selector.ID, command.selector.type);
-        assertEquals("myId", command.selector.value);
+        assertEquals("myId", command.selector.value1);
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class WireCommandParserTest
         const command : WireCommand = parser.parse(ExampleMessages.GET_PROPERTY_BY_ID);
         assertEquals(WireCommand.GET_PROPERTY, command.type);
         assertEquals(Selector.ID, command.selector.type);
-        assertEquals("myId", command.selector.value);
+        assertEquals("myId", command.selector.value1);
         assertEquals("myProp", command.params[0]);
     }
 
@@ -51,7 +51,7 @@ public class WireCommandParserTest
         const command : WireCommand = parser.parse(ExampleMessages.SET_PROPERTY_BY_ID);
         assertEquals(WireCommand.SET_PROPERTY, command.type);
         assertEquals(Selector.ID, command.selector.type);
-        assertEquals("myId", command.selector.value);
+        assertEquals("myId", command.selector.value1);
         assertEquals("myProp", command.params[0]);
         assertEquals("myValue", command.params[1]);
     }
@@ -62,7 +62,7 @@ public class WireCommandParserTest
         const command : WireCommand = parser.parse(ExampleMessages.EXECUTE);
         assertEquals(WireCommand.EXECUTE, command.type);
         assertEquals(Selector.ID, command.selector.type);
-        assertEquals("myId", command.selector.value);
+        assertEquals("myId", command.selector.value1);
         assertEquals("param", command.params[0]);
     }
 

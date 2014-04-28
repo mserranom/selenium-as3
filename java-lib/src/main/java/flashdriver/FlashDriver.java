@@ -62,11 +62,7 @@ public class FlashDriver {
         int maxAttempts = (int) (timeout / pollInterval);
         int currentAttempt = 1;
 
-        while(true) {
-            if(currentAttempt > maxAttempts) {
-                throw new ElementNotFoundException(by.getSelector().valuesString());
-            }
-
+        while(currentAttempt <= maxAttempts) {
             try {
                 FlashElement element = new FlashElement(by.getSelector(), processor);
                 element.exists();
@@ -78,9 +74,9 @@ public class FlashDriver {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             currentAttempt++;
         }
+        throw new ElementNotFoundException(by.getSelector().valuesString());
     }
 
     public String executeFunction(String id) {

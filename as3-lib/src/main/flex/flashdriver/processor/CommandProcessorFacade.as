@@ -15,13 +15,10 @@ public class CommandProcessorFacade implements ICommandProcessorFacade
 
     private static const LOG : ILogger = Logger.getLogger(FlashDriverConnection);
 
-    private static const ERROR : String = "error";
-    private static const SUCCESS : String = "success";
+    private var _processor : IWireCommandExecutor;
+    private var _parser : WireCommandParser;
 
-    private var _processor : ICommandProcessor
-    private var _parser : WireCommandParser
-
-    public function CommandProcessorFacade(processor:ICommandProcessor, parser : WireCommandParser)
+    public function CommandProcessorFacade(processor:IWireCommandExecutor, parser : WireCommandParser)
     {
         _processor = processor;
         _parser = parser;
@@ -33,7 +30,7 @@ public class CommandProcessorFacade implements ICommandProcessorFacade
         {
             LOG.debug("processing command: " + command);
             const wireCmd : WireCommand = _parser.parse(command);
-            const result : String = _processor.process(wireCmd);
+            const result : String = _processor.execute(wireCmd);
         }
         catch(error:FlashDriverError)
         {
@@ -44,7 +41,8 @@ public class CommandProcessorFacade implements ICommandProcessorFacade
         catch (error:Error)
         {
             LOG.error("error parsing processing wire command:" + command + "\n" + error.toString());
-            wireResult = new WireResult(WireResult.ERROR, ErrorCodes.INTERNAL, [error.message]);
+            var msg : String = error.getStackTrace() ? error.getStackTrace() : error.message;
+            wireResult = new WireResult(WireResult.ERROR, ErrorCodes.INTERNAL, [msg]);
             return wireResult.toJsonString()
         }
 

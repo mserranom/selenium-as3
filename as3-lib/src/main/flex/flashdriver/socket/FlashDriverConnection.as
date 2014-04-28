@@ -18,7 +18,7 @@ public class FlashDriverConnection
 
     private var _processor : ICommandProcessorFacade;
 
-    public function start(socket:Socket, processor : ICommandProcessorFacade)
+    public function start(socket:Socket, processor : ICommandProcessorFacade) : void
     {
         if(_socket)
         {

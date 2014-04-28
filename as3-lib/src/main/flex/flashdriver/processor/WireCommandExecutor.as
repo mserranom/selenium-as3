@@ -7,21 +7,22 @@ import flashdriver.processor.commands.Execute;
 import flashdriver.processor.commands.Exists;
 import flashdriver.processor.commands.GetProperty;
 import flashdriver.processor.commands.SetProperty;
+import flashdriver.finder.ElementFinder;
 
 import mx.logging.ILogger;
 
-public class CommandProcessor implements ICommandProcessor
+public class WireCommandExecutor implements IWireCommandExecutor
 {
-    private static const LOG : ILogger = Logger.getLogger(CommandProcessor);
+    private static const LOG : ILogger = Logger.getLogger(WireCommandExecutor);
 
-    private var _cache : ElementCacheProxy;
+    private var _cache : ElementFinder;
 
-    public function CommandProcessor(cache:ElementCacheProxy)
+    public function WireCommandExecutor(cache:ElementFinder)
     {
         _cache = cache;
     }
 
-    public function process(command:WireCommand) : String
+    public function execute(command:WireCommand) : String
     {
         switch(command.type)
         {
@@ -42,27 +43,27 @@ public class CommandProcessor implements ICommandProcessor
 
     private function processClick(command:WireCommand) : String
     {
-        return new Click(_cache).process(command);
+        return new Click().process(command);
     }
 
     private function processExists(command:WireCommand) : String
     {
-        return new Exists(_cache).process(command);
+        return new Exists().process(command);
     }
 
     private function processGetProperty(command:WireCommand) : String
     {
-        return new GetProperty(_cache).process(command);
+        return new GetProperty().process(command);
     }
 
     private function processSetProperty(command:WireCommand) : String
     {
-        return new SetProperty(_cache).process(command);
+        return new SetProperty().process(command);
     }
 
     private function processExecute(command:WireCommand) : String
     {
-        return new Execute(_cache).process(command);
+        return new Execute().process(command);
     }
 }
 }

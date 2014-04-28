@@ -1,18 +1,22 @@
 package flashdriver.register
 {
+import flash.display.DisplayObjectContainer;
 import flash.utils.Dictionary;
-import flash.utils.getQualifiedClassName;
 
 import flashdriver.error.ErrorCodes;
 import flashdriver.error.FlashDriverError;
 
-import flashdriver.messages.Selector;
+import starling.display.DisplayObjectContainer;
 
-public class ElementCache
+public class Register
 {
     private static var _cacheId : Dictionary = new Dictionary(true);
 
     private static var _functionsCache : Dictionary = new Dictionary(true);
+
+    private static var _root : flash.display.DisplayObjectContainer;
+
+    private static var _starlingRoot : starling.display.DisplayObjectContainer;
 
     public static function registerElementById(id:String, element:*) : void
     {
@@ -56,31 +60,34 @@ public class ElementCache
         _functionsCache = new Dictionary(true);
     }
 
-    public static function getElement(selector:Selector) : *
+    public static function getElement(id:String) : *
     {
-        if(selector.type == Selector.ID)
-        {
-            const result : * = _cacheId[selector.value];
-            if(!result)
-            {
-                throw new FlashDriverError(ErrorCodes.ELEMENT_NOT_FOUND,[selector.value]);
-            }
-            return result;
-        }
-        else
-        {
-            throw new Error("Unknown selector type: " + selector.type);
-        }
+        return _cacheId[id];
     }
 
     public static function getFunction(id:String) : Function
     {
-        const result : * = _functionsCache[id];
-        if(!result)
-        {
-            throw new FlashDriverError(ErrorCodes.FUNCTION_NOT_FOUND,[id]);
-        }
-        return result;
+        return _functionsCache[id];
+    }
+
+    public static function registerRoot(root:flash.display.DisplayObjectContainer) : void
+    {
+        _root = root;
+    }
+
+    public static function registerStarlingRoot(root:starling.display.DisplayObjectContainer) : void
+    {
+        _starlingRoot = root;
+    }
+
+    public static function get root() : flash.display.DisplayObjectContainer
+    {
+        return _root;
+    }
+
+    public static function get starlingRoot() : starling.display.DisplayObjectContainer
+    {
+        return _starlingRoot;
     }
 }
 }

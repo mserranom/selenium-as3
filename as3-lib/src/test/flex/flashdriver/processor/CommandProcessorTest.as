@@ -12,6 +12,7 @@ import flash.events.MouseEvent;
 import flashdriver.messages.Selector;
 
 import flashdriver.messages.WireCommand;
+import flashdriver.finder.ElementFinder;
 
 import flashdriver.processor.vo.BooleanBasedVO;
 import flashdriver.processor.vo.IntegerBasedVO;
@@ -29,22 +30,22 @@ public class CommandProcessorTest
 {
     [Rule]
     public var includeMocks : IncludeMocksRule = new IncludeMocksRule([
-        ElementCacheProxy]);
+        ElementFinder]);
 
     private var mockRepo : MockRepository;
 
-    private var elementCacheProxyMock : ElementCacheProxy;
+    private var elementCacheProxyMock : ElementFinder;
 
-    private var processor : CommandProcessor;
+    private var processor : WireCommandExecutor;
 
     [Before]
     public function setup() : void
     {
         mockRepo = new MockRepository();
-        elementCacheProxyMock = mockRepo.createStub(ElementCacheProxy) as ElementCacheProxy;
+        elementCacheProxyMock = mockRepo.createStub(ElementFinder) as ElementFinder;
         mockRepo.replayAll();
 
-        processor = new CommandProcessor(elementCacheProxyMock);
+        processor = new WireCommandExecutor(elementCacheProxyMock);
     }
 
     [Test]
@@ -55,10 +56,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.EXISTS, selector, []);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertStrictlyEquals("", processor.process(command));
+        assertStrictlyEquals("", processor.execute(command));
     }
 
     [Test]
@@ -69,10 +70,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.GET_PROPERTY, selector, ["myProp"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("myValue", processor.process(command));
+        assertEquals("myValue", processor.execute(command));
     }
 
 
@@ -87,10 +88,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.CLICK, selector, []);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertStrictlyEquals("", processor.process(command));
+        assertStrictlyEquals("", processor.execute(command));
     }
 
     [Test]
@@ -105,11 +106,11 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.CLICK, selector, []);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
 
         mockRepo.replayAll();
 
-        processor.process(command);
+        processor.execute(command);
 
         assertTrue(eventWasTriggered);
     }
@@ -127,10 +128,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","newValue"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals("newValue", element.property);
     }
 
@@ -143,10 +144,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","true"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals("true", element.property);
     }
 
@@ -159,10 +160,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","921.66"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals("921.66", element.property);
     }
 
@@ -175,10 +176,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","NaN"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals("NaN", element.property);
     }
 
@@ -195,10 +196,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","false"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertFalse(element.property);
     }
 
@@ -211,10 +212,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","true"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertTrue(element.property);
     }
 
@@ -230,10 +231,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","412.7"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals(412.7, element.property);
     }
 
@@ -246,10 +247,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","NaN"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertTrue(isNaN(element.property));
     }
 
@@ -266,10 +267,10 @@ public class CommandProcessorTest
         const command : WireCommand = new WireCommand(WireCommand.SET_PROPERTY, selector, ["property","412"]);
 
         mockRepo.backToRecord(elementCacheProxyMock);
-        SetupResult.forCall(elementCacheProxyMock.getElement(selector)).returnValue(element);
+        SetupResult.forCall(elementCacheProxyMock.find(selector)).returnValue(element);
         mockRepo.replayAll();
 
-        assertEquals("", processor.process(command));
+        assertEquals("", processor.execute(command));
         assertEquals(412, element.property);
     }
 }

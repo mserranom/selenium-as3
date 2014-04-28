@@ -57,6 +57,7 @@ public class TestApp extends Sprite
         new FlashDriver().connect();
 
         FlashDriver.registerFunction("callback", buildMessage);
+        FlashDriver.registerRoot(this.stage);
 
     }
 

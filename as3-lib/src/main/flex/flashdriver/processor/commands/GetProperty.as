@@ -6,20 +6,14 @@ import flashdriver.error.ErrorCodes;
 import flashdriver.error.FlashDriverError;
 
 import flashdriver.messages.WireCommand;
-import flashdriver.processor.ElementCacheProxy;
+import flashdriver.finder.ElementFinder;
 
 public class GetProperty
 {
-    private var _cache : ElementCacheProxy;
-
-    public function GetProperty(cache:ElementCacheProxy)
-    {
-        _cache = cache;
-    }
 
     public function process(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
+        const element : * = new ElementFinder().find(command.selector);
         const prop : String = command.params[0];
         if(!element.hasOwnProperty(prop))
         {

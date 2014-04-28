@@ -31,7 +31,7 @@ public class WireCommandParser
         }
 
         const type : String = getType(message);
-        const selector : Selector = getSelector(message);
+        const selector : Selector = Selector.fromData(message[1]);
         const params : Array = message.slice(2);
 
         const result : WireCommand = new WireCommand(type, selector, params);
@@ -52,19 +52,6 @@ public class WireCommandParser
                 return message[0];
             default:
                 throw new Error("Unknown message type: " + message[0] + ". message=" + _currentMsg);
-        }
-    }
-
-    private function getSelector(message:Array) : Selector
-    {
-        const selectorObject : Object = message[1];
-        if(selectorObject[Selector.ID])
-        {
-            return new Selector(Selector.ID, selectorObject[Selector.ID])
-        }
-        else
-        {
-            throw new Error("Unable to resolve element selector:" + _currentMsg);
         }
     }
 

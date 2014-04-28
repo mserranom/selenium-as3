@@ -5,20 +5,14 @@ import flash.events.MouseEvent;
 import flash.utils.getQualifiedClassName;
 
 import flashdriver.messages.WireCommand;
-import flashdriver.processor.ElementCacheProxy;
+import flashdriver.finder.ElementFinder;
 
 public class Click
 {
-    private var _cache : ElementCacheProxy;
-
-    public function Click(cache:ElementCacheProxy)
-    {
-        _cache = cache;
-    }
 
     public function process(command:WireCommand) : String
     {
-        const element : * = _cache.getElement(command.selector);
+        const element : * = new ElementFinder().find(command.selector);
         if(!(element is DisplayObject))
         {
             throw new Error("couldn't perform click, object of type"

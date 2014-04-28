@@ -1,15 +1,18 @@
 package flashdriver
 {
+import flash.display.DisplayObjectContainer;
 import flash.events.Event;
 
 import flashdriver.log.Logger;
 import flashdriver.processor.CommandProcessorFacadeFactory;
 import flashdriver.processor.ICommandProcessorFacade;
-import flashdriver.register.ElementCache;
+import flashdriver.register.Register;
 import flashdriver.socket.SocketConnector;
 import flashdriver.socket.FlashDriverConnection;
 
 import mx.logging.ILogger;
+
+import starling.display.DisplayObjectContainer;
 
 public class FlashDriver
 {
@@ -24,27 +27,37 @@ public class FlashDriver
 
     public static function registerElementByID(id:String, element:*) : void
     {
-        ElementCache.registerElementById(id, element);
+        flashdriver.register.Register.registerElementById(id, element);
     }
 
     public static function removeElementById(id:String, element:*) : void
     {
-        ElementCache.removeElementById(id, element);
+        flashdriver.register.Register.removeElementById(id, element);
     }
 
     public static function registerFunction(id:String, func:Function) : void
     {
-       ElementCache.registerFunction(id, func);
+       flashdriver.register.Register.registerFunction(id, func);
     }
 
     public static function removeFunction(id:String, func:Function) : void
     {
-        ElementCache.removeFunction(id, func);
+        flashdriver.register.Register.removeFunction(id, func);
     }
 
     public static function clearCache() : void
     {
-        ElementCache.clearCache();
+        flashdriver.register.Register.clearCache();
+    }
+
+    public static function registerRoot(root:flash.display.DisplayObjectContainer) : void
+    {
+        flashdriver.register.Register.registerRoot(root);
+    }
+
+    public static function registerStarlingRoot(root:starling.display.DisplayObjectContainer) : void
+    {
+        flashdriver.register.Register.registerStarlingRoot(root);
     }
 
     public function connect(port:uint=DEFAULT_PORT) : void

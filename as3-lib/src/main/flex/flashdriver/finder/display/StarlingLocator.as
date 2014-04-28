@@ -1,9 +1,9 @@
-package flashdriver.display
+package flashdriver.finder.display
 {
+import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
 
 import starling.display.DisplayObject;
-
 import starling.display.DisplayObjectContainer;
 
 public class StarlingLocator
@@ -13,7 +13,7 @@ public class StarlingLocator
         var numChildren : int = root.numChildren;
         for (var i:int = 0; i < numChildren; i++)
         {
-            var displayObject:DisplayObject = root[i];
+            var displayObject:DisplayObject = root.getChildAt(i);
             if(displayObject.name == name)
             {
                 return displayObject;
@@ -31,7 +31,7 @@ public class StarlingLocator
         var numChildren : int = root.numChildren;
         for (var i:int = 0; i < numChildren; i++)
         {
-            var displayObject:DisplayObject = root[i];
+            var displayObject:DisplayObject = root.getChildAt(i);
             if(hasLabel(displayObject, text))
             {
                 return displayObject;
@@ -44,19 +44,74 @@ public class StarlingLocator
         return null;
     }
 
+    public function findType(type: String, root: DisplayObjectContainer) : DisplayObject
+    {
+        try
+        {
+            var clazz : Class = getDefinitionByName(type) as Class;
+        }
+        catch(error:Error)
+        {
+            return null;
+        }
+
+        var numChildren : int = root.numChildren;
+        for (var i:int = 0; i < numChildren; i++)
+        {
+            var displayObject:DisplayObject = root.getChildAt(i);
+            if(displayObject is clazz)
+            {
+
+                return displayObject;
+            }
+            else if(displayObject is DisplayObjectContainer)
+            {
+                return findType(type, displayObject as DisplayObjectContainer);
+            }
+        }
+        return null;
+    }
+
+    public function findTypeAndLabel(type: String, text:String, root: DisplayObjectContainer) : DisplayObject
+    {
+        try
+        {
+            var clazz : Class = getDefinitionByName(type) as Class;
+        }
+        catch(error:Error)
+        {
+            return null;
+        }
+
+        var numChildren : int = root.numChildren;
+        for (var i:int = 0; i < numChildren; i++)
+        {
+            var displayObject:DisplayObject = root.getChildAt(i);
+            if(displayObject is clazz && hasLabel(displayObject, text))
+            {
+                return displayObject;
+            }
+            else if(displayObject is DisplayObjectContainer)
+            {
+                return findTypeAndLabel(type, text, displayObject as DisplayObjectContainer);
+            }
+        }
+        return null;
+    }
+
     public function findButton(text: String, root: DisplayObjectContainer) : DisplayObject
     {
         var numChildren : int = root.numChildren;
         for (var i:int = 0; i < numChildren; i++)
         {
-            var displayObject:DisplayObject = root[i];
+            var displayObject:DisplayObject = root.getChildAt(i);
             if(hasLabel(displayObject, text) && isButton(displayObject))
             {
                 return displayObject;
             }
             else if(displayObject is DisplayObjectContainer)
             {
-                return findLabel(text, displayObject as DisplayObjectContainer);
+                return findButton(text, displayObject as DisplayObjectContainer);
             }
         }
         return null;

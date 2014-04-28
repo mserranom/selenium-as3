@@ -6,17 +6,19 @@ import java.util.List;
 
 public class ExceptionFactory {
 
-    private static String ELEMENT_NOT_FOUND = "#10";
+    private static final String ELEMENT_NOT_FOUND = "#10";
 
-    private static String PROPERTY_NOT_FOUND = "#11";
+    private static final String PROPERTY_NOT_FOUND = "#11";
 
-    private static String FUNCTION_NOT_FOUND = "#12";
+    private static final String FUNCTION_NOT_FOUND = "#12";
 
-    private static String UNABLE_TO_SET_PROPERTY = "#13";
+    private static final String UNABLE_TO_SET_PROPERTY = "#13";
 
-    private static String FUNCTION_INVOCATION_ERROR = "#21";
+    private static final String DISPLAY_ROOT_NOT_DEFINED = "#14";
 
-    private static String INTERNAL = "#99";
+    private static final String FUNCTION_INVOCATION_ERROR = "#21";
+
+    private static final String INTERNAL = "#99";
 
     public static RuntimeException fromError(WireResult result) {
         if(result.getResult().equals(ELEMENT_NOT_FOUND)) {
@@ -29,6 +31,8 @@ public class ExceptionFactory {
             return createFunctionNotFound(result);
         } else if(result.getResult().equals(FUNCTION_INVOCATION_ERROR)) {
             return createFunctionInvocation(result);
+        } else if(result.getResult().equals(DISPLAY_ROOT_NOT_DEFINED)) {
+            return createDisplayRootNotDefined(result);
         } else if(result.getResult().equals(INTERNAL)) {
             return createInternal(result);
         } else {
@@ -73,6 +77,10 @@ public class ExceptionFactory {
                     "an id and stack trace");
         }
         return new FlashDriverFunctionInvocationException(result.getParams().get(0), result.getParams().get(1));
+    }
+
+    private static RuntimeException createDisplayRootNotDefined(WireResult result) {
+        return new DisplayRootNotDefinedException();
     }
 
     private static RuntimeException createInternal(WireResult result) {
