@@ -1,8 +1,9 @@
 package flashdriver.integration;
 
 
-import flashdriver.FlashDriver;
 import flashdriver.exceptions.FlashDriverConnectionException;
+import flashdriver.BinarySocketFlashDriver;
+import flashdriver.FlashDriver;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class ConnectionTest {
 
@@ -20,7 +21,6 @@ public class ConnectionTest {
     private FirefoxDriver driver;
 
     protected FlashDriver flashDriver;
-
 
     @After
     public void closeBrowser() throws IOException {
@@ -37,13 +37,13 @@ public class ConnectionTest {
     public void connectingToWrongPort_throwsConnectionException() {
         driver = new FirefoxDriver();
         driver.get(TEST_APP);
-        flashDriver = new FlashDriver();
+        flashDriver = new BinarySocketFlashDriver();
         flashDriver.connect(1271329876);
     }
 
     @Test
     public void closingNotOpenedConnection_doesNotThrowError() {
-        flashDriver = new FlashDriver();
+        flashDriver = new BinarySocketFlashDriver();
         flashDriver.close();
     }
 
@@ -51,14 +51,13 @@ public class ConnectionTest {
     public void connect_fails_onTimeout() {
         driver = new FirefoxDriver();
         driver.get(TEST_APP_NO_CONN);
-        flashDriver = new FlashDriver();
-        flashDriver.setConnectionTimeout(2200);
+        flashDriver = new BinarySocketFlashDriver();
 
         long watch = System.currentTimeMillis();
         try {
-            flashDriver.connect(56666);
+            flashDriver.connect(56666, 2200);
         } finally {
-            assertThat(System.currentTimeMillis() - watch, greaterThan(2200L));
+            assertThat(System.currentTimeMillis() - watch, greaterThanOrEqualTo(2200L));
         }
 
     }

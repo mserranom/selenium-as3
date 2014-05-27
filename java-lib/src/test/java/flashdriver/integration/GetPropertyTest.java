@@ -23,7 +23,6 @@ public class GetPropertyTest extends IntegrationTestBase {
         assertEquals("100", flashDriver.findElement(By.id("rect1")).getString("xfxfxf"));
     }
 
-
     @Test
     public void getString_returnsValue() throws Exception{
         assertEquals("100", flashDriver.findElement(By.id("rect1")).getString("x"));

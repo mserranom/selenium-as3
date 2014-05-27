@@ -1,5 +1,6 @@
 package flashdriver.integration;
 
+import flashdriver.BinarySocketFlashDriver;
 import flashdriver.FlashDriver;
 import org.junit.After;
 import org.junit.Before;
@@ -27,12 +28,13 @@ public class IntegrationTestBase {
         while(flashDriver == null)
         {
             try {
-                flashDriver = new FlashDriver();
+                flashDriver = new BinarySocketFlashDriver();
                 flashDriver.connect();
             } catch(Exception e) {
                 flashDriver = null;
             }
         }
+        flashDriver.setDefaultTimeout(800, 200);
     }
 
     @After

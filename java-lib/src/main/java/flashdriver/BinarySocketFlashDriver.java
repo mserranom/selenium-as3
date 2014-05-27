@@ -1,6 +1,7 @@
-package flashdriver.v2;
+package flashdriver;
 
 import flashdriver.processor.Processor;
+import flashdriver.core.FlashDriverBase;
 
 public class BinarySocketFlashDriver extends FlashDriverBase {
 

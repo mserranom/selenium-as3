@@ -2,7 +2,6 @@ package flashdriver.integration;
 
 import flashdriver.core.By;
 import flashdriver.exceptions.ElementNotFoundException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

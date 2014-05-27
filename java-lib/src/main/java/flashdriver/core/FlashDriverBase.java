@@ -1,8 +1,7 @@
-package flashdriver.v2;
+package flashdriver.core;
 
-import flashdriver.core.By;
-import flashdriver.core.FlashElement;
-import flashdriver.core.FlashFunction;
+import flashdriver.FlashDriver;
+import flashdriver.core.*;
 import flashdriver.messages.Selector;
 import flashdriver.messages.SelectorType;
 import flashdriver.processor.Processor;

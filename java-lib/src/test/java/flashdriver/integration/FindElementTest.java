@@ -1,6 +1,5 @@
 package flashdriver.integration;
 
-import flashdriver.FlashDriver;
 import flashdriver.core.By;
 import flashdriver.exceptions.ElementNotFoundException;
 import org.junit.Test;
@@ -22,34 +21,24 @@ public class FindElementTest extends IntegrationTestBase {
     }
 
     @Test
-    public void waitForElement() {
-        flashDriver.waitForElement(By.id("label")).exists();
+    public void findElement_withTimeout() {
+        flashDriver.withTimeout(200).findElement(By.id("label")).exists();
         assertTrue(true);
     }
 
     @Test(expected = ElementNotFoundException.class)
-    public void elementNotFound_throwsException_and_defaultTimeout_isCorrect() throws IOException {
+    public void elementNotFound_throwsException_and_timeout_isCorrect() throws IOException {
         long watch = System.currentTimeMillis();
         try {
-            flashDriver.waitForElement(By.id("foo")).exists();
+            flashDriver.withTimeout(1500, 200).findElement(By.id("foo")).exists();
         } finally {
-            assertThat(System.currentTimeMillis() - watch, greaterThan(FlashDriver.DEFAULT_TIMEOUT));
-        }
-    }
-
-    @Test(expected = ElementNotFoundException.class)
-    public void elementNotFound_throwsException_and_timeoutSet_isCorrect() throws IOException {
-        long watch = System.currentTimeMillis();
-        try {
-            flashDriver.waitForElement(By.id("foo"), 1000).exists();
-        } finally {
-            assertThat(System.currentTimeMillis() - watch, greaterThan(1000L));
+            assertThat(System.currentTimeMillis() - watch, greaterThan(1500L));
         }
     }
 
     @Test(expected = ElementNotFoundException.class)
     public void findElements_throwsError() throws Exception{
-        flashDriver.findElement(By.id("fooxfx")).exists();
+        flashDriver.findElement(By.id("foo1234")).exists();
     }
 
 }

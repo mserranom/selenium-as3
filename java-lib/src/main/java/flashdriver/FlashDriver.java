@@ -1,91 +1,24 @@
 package flashdriver;
 
 
-import flashdriver.core.By;
-import flashdriver.core.FlashElement;
-import flashdriver.core.FlashFunction;
-import flashdriver.exceptions.ElementNotFoundException;
-import flashdriver.messages.Selector;
-import flashdriver.messages.SelectorType;
-import flashdriver.processor.Processor;
+import flashdriver.core.Query;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface FlashDriver extends Query {
 
-public class FlashDriver {
+    public void connect();
 
-    public static final int DEFAULT_CONNECT_TIMEOUT = 30000;
-    public static final long DEFAULT_POLL_INTERVAL = 500;
-    public static final long DEFAULT_TIMEOUT = 5000;
-    public static final int DEFAULT_PORT = 54081;
+    public void connect(int port);
 
-    private Processor processor;
+    public void connect(int port, int timeout);
 
-    private int connectionTimeout = DEFAULT_CONNECT_TIMEOUT;
+    public void close();
 
-    public void connect() {
-        this.connect(DEFAULT_PORT);
-    }
+    Query withTimeout(long timeout);
 
-    public void connect(int port) {
-        processor = new Processor();
-        processor.setConnectionTimeout(connectionTimeout);
-        processor.connect(port);
-    }
+    Query withTimeout(long timeout, long pollInterval);
 
-    public void close() {
-        if(processor != null) {
-            processor.disconnect();
-        }
-    }
+    void setDefaultTimeout(long timeout);
 
-    public void setConnectionTimeout(int value) {
-        this.connectionTimeout = value;
-    }
-
-    public FlashElement findElement(By by) {
-        FlashElement element = new FlashElement(by.getSelector(), processor);
-        element.exists();
-        return element;
-    }
-
-    public FlashElement waitForElement(By by) {
-        return waitForElement(by, DEFAULT_TIMEOUT, DEFAULT_POLL_INTERVAL);
-    }
-
-    public FlashElement waitForElement(By by, float timeout) {
-        return waitForElement(by, timeout, DEFAULT_POLL_INTERVAL);
-    }
-
-    public FlashElement waitForElement(By by, float timeout, float pollInterval) {
-
-        int maxAttempts = (int) (timeout / pollInterval);
-        int currentAttempt = 1;
-
-        while(currentAttempt <= maxAttempts) {
-            try {
-                FlashElement element = new FlashElement(by.getSelector(), processor);
-                element.exists();
-                return element;
-            } catch (ElementNotFoundException e) { }
-
-            try {
-                Thread.sleep((long) pollInterval);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            currentAttempt++;
-        }
-        throw new ElementNotFoundException(by.getSelector().valuesString());
-    }
-
-    public String executeFunction(String id) {
-        return executeFunction(id, new ArrayList<String>());
-    }
-
-    public String executeFunction(String id, List<String> params) {
-        FlashFunction element = new FlashFunction(new Selector(SelectorType.ID, id), processor);
-        return element.execute(params);
-    }
+    void setDefaultTimeout(long timeout, long pollInterval);
 
 }

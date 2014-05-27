@@ -1,8 +1,7 @@
-package flashdriver.v2;
+package flashdriver.core;
 
-import flashdriver.core.By;
-import flashdriver.core.FlashElement;
 import flashdriver.processor.Processor;
+import flashdriver.processor.Poller;
 
 public class FindElement {
 

@@ -1,4 +1,4 @@
-package flashdriver.v2;
+package flashdriver.core;
 
 
 public interface ExpectedConditions {

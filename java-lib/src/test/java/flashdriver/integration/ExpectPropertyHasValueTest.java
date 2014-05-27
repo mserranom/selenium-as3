@@ -1,4 +1,4 @@
-package flashdriver.integration.v2;
+package flashdriver.integration;
 
 import flashdriver.core.By;
 import flashdriver.exceptions.ExpectationException;

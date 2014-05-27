@@ -1,7 +1,4 @@
-package flashdriver.v2;
-
-import flashdriver.core.By;
-import flashdriver.core.FlashElement;
+package flashdriver.core;
 
 import java.util.List;
 
