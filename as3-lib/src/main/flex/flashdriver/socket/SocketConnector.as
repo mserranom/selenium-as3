@@ -63,6 +63,7 @@ public class SocketConnector extends EventDispatcher
 
     private function onClientError(event:Event) : void
     {
+        //TODO: event instead
         throw new Error("socket connection failed: " + event.toString());
         destroy();
         dispatchEvent(new Event(Event.CLOSE));

@@ -83,7 +83,7 @@ public class FlashDriver
 
     private function onSocketError(event:Event):void
     {
-        LOG.error("couldn't establish socket connection");
+        LOG.warn("couldn't establish socket connection");
         destroyConnection();
     }
 

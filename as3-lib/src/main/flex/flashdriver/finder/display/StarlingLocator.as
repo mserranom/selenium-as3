@@ -55,18 +55,25 @@ public class StarlingLocator
             return null;
         }
 
+        var result : DisplayObject;
+
         var numChildren : int = root.numChildren;
         for (var i:int = 0; i < numChildren; i++)
         {
+
             var displayObject:DisplayObject = root.getChildAt(i);
             if(displayObject is clazz)
             {
-
-                return displayObject;
+                result = displayObject;
             }
             else if(displayObject is DisplayObjectContainer)
             {
-                return findType(type, displayObject as DisplayObjectContainer);
+                result = findType(type, displayObject as DisplayObjectContainer);
+            }
+
+            if(result)
+            {
+                return result;
             }
         }
         return null;

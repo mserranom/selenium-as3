@@ -43,10 +43,6 @@ public class DisplayListLocator
         return null;
     }
 
-
-    public var msg : String = "";
-
-
     public function findType(type: String, root: DisplayObjectContainer) : DisplayObject
     {
         try
@@ -65,7 +61,6 @@ public class DisplayListLocator
         {
 
             var displayObject:DisplayObject = root.getChildAt(i);
-            msg += getQualifiedClassName(displayObject) + "__"
             if(displayObject is clazz)
             {
                 result = displayObject;
