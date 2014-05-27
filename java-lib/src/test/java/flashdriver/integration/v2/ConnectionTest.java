@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class ConnectionTest {
 
@@ -57,7 +58,7 @@ public class ConnectionTest {
         try {
             flashDriver.connect(56666, 2200);
         } finally {
-            assertThat(System.currentTimeMillis() - watch, greaterThan(2200L));
+            assertThat(System.currentTimeMillis() - watch, greaterThanOrEqualTo(2200L));
         }
 
     }
