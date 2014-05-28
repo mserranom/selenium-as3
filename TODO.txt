@@ -10,6 +10,7 @@ TODO
  - add 'by' chains
  - take screenshot
  - remote running
+ - remove element by id providing just id
 
 
 DONE

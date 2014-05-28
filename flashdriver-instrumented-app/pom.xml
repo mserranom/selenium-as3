@@ -13,13 +13,6 @@
     <version>0.1</version>
 	<packaging>swf</packaging>
 
-	<properties>
-        <flex.sdk.version>4.5.1.21328</flex.sdk.version>
-        <flexunit.version>4.1.0</flexunit.version>
-        <flexmojos.version>5.1-beta-QP</flexmojos.version>
-        <flash-console.version>2.7.pb</flash-console.version>
-    </properties>
-			
 	<build>
 		<sourceDirectory>src/main/flex</sourceDirectory>
 
@@ -32,6 +25,7 @@
 				<configuration>
                     <swfVersion>20</swfVersion>
                     <debug>true</debug>
+                    <iKnowWhatImDoingPleaseBreakMyBuildIwontBlameFlexmojosForStopWorking>true</iKnowWhatImDoingPleaseBreakMyBuildIwontBlameFlexmojosForStopWorking>
                     <verboseStacktraces>true</verboseStacktraces>
                     <sourceFile>flashselenium/testapps/TestApp.as</sourceFile>
                     <storepass>ThisShouldNotBeRequired</storepass>

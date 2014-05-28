@@ -1,13 +1,13 @@
 package flashselenium.testapps
 {
-	import com.junkbyte.console.Cc;
+import com.junkbyte.console.Cc;
 
-	import mx.core.mx_internal;
-	import mx.logging.LogEvent;
-	import mx.logging.LogEventLevel;
-	import mx.logging.targets.LineFormattedTarget;
+import mx.core.mx_internal;
+import mx.logging.LogEvent;
+import mx.logging.LogEventLevel;
+import mx.logging.targets.LineFormattedTarget;
 
-	use namespace mx_internal;
+use namespace mx_internal;
 	
 	public class ConsoleLogTarget extends LineFormattedTarget
 	{
@@ -40,7 +40,6 @@ package flashselenium.testapps
 					Cc.fatal(pendingMessage);
 					break;
 				default:
-					// ignore message of unknown level
 					break;
 			}
 		}

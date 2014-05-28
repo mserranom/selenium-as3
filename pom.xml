@@ -11,6 +11,16 @@
         <version>1.0.0</version>
     </parent>
 
+    <properties>
+        <flex.sdk.version>4.6.b.23201</flex.sdk.version>
+        <flexunit.version>4.1.0</flexunit.version>
+        <flexmojos.version>5.1-beta-QP</flexmojos.version>
+        <flash-console.version>2.7.pb</flash-console.version>
+        <hamcrest.version>1.1</hamcrest.version>
+        <asmock.version>1.0</asmock.version>
+        <starling.version>1.4</starling.version>
+    </properties>
+
     <groupId>com.plumbee</groupId>
     <artifactId>flashdriver-parent</artifactId>
     <version>0.1</version>

@@ -11,7 +11,6 @@ import flash.text.TextFormat;
 
 import flashdriver.FlashDriver;
 
-import mx.logging.ILogger;
 import mx.logging.Log;
 import mx.logging.LogEventLevel;
 
@@ -19,13 +18,34 @@ import mx.logging.LogEventLevel;
 public class TestApp extends Sprite
 {
 
-    private var label:TextField;
+    private var textField:TextField;
 
     private var myLabel : MyLabel;
 
     public function TestApp()
     {
+        setupConsole();
 
+        addTextField();
+        addMyLabel();
+        addShapes();
+        addClickableCircle();
+
+        addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+        new FlashDriver().connect();
+        FlashDriver.registerFunction("callback", buildMessage);
+        FlashDriver.registerRoot(this.stage);
+
+    }
+
+    private function onEnterFrame(...rest) : void
+    {
+        textField.text = "myText";
+    }
+
+    private function setupConsole():void
+    {
         Cc.startOnStage(stage, "`");
         Cc.width = stage.width * 0.7;
         Cc.commandLine = true;
@@ -33,40 +53,7 @@ public class TestApp extends Sprite
 
         Cc.visible = true;
 
-        initializeConsoleTarget();
-
-        configureLabel();
-
-
-        myLabel = new MyLabel();
-        myLabel.x = 20;
-        myLabel.y = 100;
-        myLabel.text = "CLICK THE CIRCLE";
-        addChild(myLabel);
-
-        addElements();
-
-        var circle : MyCircle = new MyCircle();
-        addChild(circle);
-
-        circle.addEventListener(MouseEvent.CLICK, function (...rest):void{
-            myLabel.text = "CIRCLE CLICKED!!"; });
-
-        addEventListener(Event.ENTER_FRAME, onEnterFrame);
-
-        new FlashDriver().connect();
-
-        FlashDriver.registerFunction("callback", buildMessage);
-        FlashDriver.registerRoot(this.stage);
-
-    }
-
-    private static var consoleLogTarget : ConsoleLogTarget;
-
-
-    private static function initializeConsoleTarget() : void
-    {
-        consoleLogTarget = new ConsoleLogTarget();
+        var consoleLogTarget : ConsoleLogTarget = new ConsoleLogTarget();
         consoleLogTarget.includeTime = true;
         consoleLogTarget.includeCategory = true;
         consoleLogTarget.includeLevel = true;
@@ -75,8 +62,37 @@ public class TestApp extends Sprite
         Log.addTarget(consoleLogTarget);
     }
 
+    private function addTextField():void {
+        textField = new TextField();
+        textField.autoSize = TextFieldAutoSize.LEFT;
+        textField.background = false;
+        textField.border = false;
+        textField.multiline = true;
+        textField.width = 500;
+        textField.height = 1000;
 
-    private function addElements():void
+        var format:TextFormat = new TextFormat();
+        format.font = "Verdana";
+        format.color = 0xFFFFFF;
+        format.size = 12;
+        format.underline = true;
+
+        textField.defaultTextFormat = format;
+        addChild(textField);
+
+        FlashDriver.registerElementByID("label", textField);
+    }
+
+    private function addMyLabel():void
+    {
+        myLabel = new MyLabel();
+        myLabel.x = 20;
+        myLabel.y = 100;
+        myLabel.text = "CLICK THE CIRCLE";
+        addChild(myLabel);
+    }
+
+    private function addShapes():void
     {
         var rect1 : MySquare = new MySquare();
         var sprite : Sprite = new Sprite();
@@ -95,37 +111,16 @@ public class TestApp extends Sprite
         FlashDriver.registerElementByID("rect2", rect2);
     }
 
-    private function onEnterFrame(...rest) : void
+    private function addClickableCircle():void
     {
-        label.text = "myText";
+        var circle : MyCircle = new MyCircle();
+        addChild(circle);
+
+        circle.addEventListener(MouseEvent.CLICK, function (...rest):void{
+            myLabel.text = "CIRCLE CLICKED!!"; });
     }
 
-    private function configureLabel():void {
-        label = new TextField();
-        label.autoSize = TextFieldAutoSize.LEFT;
-        label.background = false;
-        label.border = false;
-        label.multiline = true;
-        label.width = 500;
-        label.height = 1000;
-
-        var format:TextFormat = new TextFormat();
-        format.font = "Verdana";
-        format.color = 0xFFFFFF;
-        format.size = 12;
-        format.underline = true;
-
-        label.defaultTextFormat = format;
-        addChild(label);
-
-        FlashDriver.registerElementByID("label", label);
-
-//        Security.loadPolicyFile("xmlsocket://127.0.0.1:55000");
-        var logger : ILogger = Log.getLogger("app");
-        logger.info("connecting");
-    }
-
-    private function buildMessage(hello:String, world:String)
+    private function buildMessage(hello:String, world:String) : String
     {
         return hello + " " + world + "!!";
     }
